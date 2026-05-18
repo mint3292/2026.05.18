@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GradeFlow | 프리미엄 내신 등급 계산기</title>
+  <!-- Google Fonts - Inter & Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <div class="background-decorations">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon-wrapper">
+          <i data-lucide="graduation-cap" class="logo-icon"></i>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">GradeFlow</span>
+          <span class="sub-brand">내신 등급 계산기</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-button" title="테마 변경" aria-label="Toggle Theme">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="app-container">
+      
+      <!-- 상단 등급 대시보드 요약 -->
+      <section class="dashboard-banner">
+        <div class="banner-content">
+          <h1>내신 등급 시뮬레이터</h1>
+          <p>고등학교 상대평가 9등급 및 성취도를 실시간으로 계산하고 시각화합니다.</p>
+        </div>
+        <div class="banner-gpa-card">
+          <div class="gpa-label">종합 평균 내신</div>
+          <div class="gpa-value-wrapper">
+            <span id="overall-gpa">5.00</span>
+            <span class="gpa-unit">등급</span>
+          </div>
+          <div class="gpa-meta" id="gpa-meta-text">총 5개 과목 (17단위) 분석됨</div>
+        </div>
+      </section>
+
+      <!-- 메인 콘텐츠 탭 네비게이션 -->
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="quick-calc">
+          <i data-lucide="calculator"></i>
+          <span>실시간 등급 판독기</span>
+        </button>
+        <button class="tab-btn" data-tab="subject-tracker">
+          <i data-lucide="list-todo"></i>
+          <span>내신 과목 종합 관리</span>
+        </button>
+        <button class="tab-btn" data-tab="grade-info">
+          <i data-lucide="info"></i>
+          <span>등급 산출 기준표</span>
+        </button>
+      </nav>
+
+      <!-- 탭 콘텐츠 영역 -->
+      <div class="tab-content-container">
+        
+        <!-- 탭 1: 실시간 등급 판독기 -->
+        <div class="tab-pane active" id="quick-calc">
+          <div class="pane-grid-2col">
+            
+            <!-- 입력 폼 카드 -->
+            <div class="glass-card form-card">
+              <div class="card-header">
+                <i data-lucide="settings-2" class="header-icon cyan"></i>
+                <h2>성적 입력</h2>
+              </div>
+              <div class="card-body">
+                <div class="toggle-switch-wrapper">
+                  <span class="switch-label">평가 방식:</span>
+                  <div class="toggle-switch">
+                    <input type="radio" id="eval-relative" name="eval-type" value="relative" checked>
+                    <label for="eval-relative">상대평가 (9등급제)</label>
+                    <input type="radio" id="eval-absolute" name="eval-type" value="absolute">
+                    <label for="eval-absolute">절대평가 (A-E)</label>
+                  </div>
+                </div>
+
+                <!-- 상대평가 입력 그룹 -->
+                <div id="relative-input-group" class="input-fields-group active">
+                  <div class="input-wrapper">
+                    <label for="input-rank">본인 석차 (등)</label>
+                    <div class="input-control">
+                      <i data-lucide="award" class="input-icon"></i>
+                      <input type="number" id="input-rank" min="1" max="10000" value="50" placeholder="예: 5">
+                      <span class="input-suffix">등</span>
+                    </div>
+                  </div>
+
+                  <div class="input-wrapper">
+                    <label for="input-same-rank">동석차 수 (명)</label>
+                    <div class="input-control">
+                      <i data-lucide="users" class="input-icon"></i>
+                      <input type="number" id="input-same-rank" min="1" max="100" value="1" placeholder="없으면 1">
+                      <span class="input-suffix">명</span>
+                    </div>
+                    <p class="input-help-text">석차가 같은 학생 수를 입력하세요. (기본값: 1)</p>
+                  </div>
+
+                  <div class="input-wrapper">
+                    <label for="input-total">총 이수자 수 (명)</label>
+                    <div class="input-control">
+                      <i data-lucide="trending-up" class="input-icon"></i>
+                      <input type="number" id="input-total" min="1" max="10000" value="100" placeholder="예: 250">
+                      <span class="input-suffix">명</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 절대평가 입력 그룹 -->
+                <div id="absolute-input-group" class="input-fields-group">
+                  <div class="input-wrapper">
+                    <label for="input-score">원점수 (점)</label>
+                    <div class="input-control">
+                      <i data-lucide="percent" class="input-icon"></i>
+                      <input type="number" id="input-score" min="0" max="100" value="85" placeholder="예: 95">
+                      <span class="input-suffix">점</span>
+                    </div>
+                  </div>
+
+                  <div class="input-wrapper">
+                    <label for="abs-type-select">학교 등급 체계</label>
+                    <div class="input-control">
+                      <i data-lucide="school" class="input-icon"></i>
+                      <select id="abs-type-select">
+                        <option value="middle">중학교 성취도 (A, B, C, D, E)</option>
+                        <option value="high-career">고등학교 진로선택 (A, B, C)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="quick-add-to-tracker">
+                  <button id="btn-add-to-tracker" class="btn btn-secondary">
+                    <i data-lucide="plus-circle"></i>
+                    <span>이 과목을 종합 내신에 추가</span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- 결과 및 시각화 카드 -->
+            <div class="glass-card result-card">
+              <div class="card-header">
+                <i data-lucide="pie-chart" class="header-icon purple"></i>
+                <h2>판독 결과</h2>
+              </div>
+              <div class="card-body result-body">
+                
+                <div class="grade-display-section">
+                  <div class="badge-grade-container">
+                    <div class="grade-circle" id="result-grade-circle">
+                      <span class="grade-num" id="result-grade-value">5</span>
+                      <span class="grade-label" id="result-grade-label">등급</span>
+                    </div>
+                  </div>
+                  <div class="grade-stats">
+                    <div class="percentage-badge" id="result-percentage-badge">상위 50.00%</div>
+                    <p class="grade-calculation-text" id="result-calc-details">
+                      중간석차 <strong>50.0등</strong> (동석차 1명 반영)<br>
+                      전체 100명 중 상위 <strong>50%</strong>에 해당합니다.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- 정규분포 곡선 차트 영역 -->
+                <div class="bell-curve-section">
+                  <div class="section-title-sm">석차 분포 백분위 (정규분포)</div>
+                  <div class="svg-container">
+                    <svg id="bell-curve-svg" viewBox="0 0 500 220" preserveAspectRatio="xMidYMid meet">
+                      <!-- SVG Content created dynamically via JavaScript -->
+                    </svg>
+                  </div>
+                  <div class="curve-legend">
+                    <span>1등급 (상위 4%)</span>
+                    <span>중앙값 (50%)</span>
+                    <span>9등급 (하위 4%)</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 탭 2: 내신 과목 종합 관리 -->
+        <div class="tab-pane" id="subject-tracker">
+          
+          <div class="tracker-layout">
+            
+            <!-- 과목 추가 폼 -->
+            <div class="glass-card tracker-form-card">
+              <div class="card-header">
+                <i data-lucide="folder-plus" class="header-icon blue"></i>
+                <h2>새 과목 등록</h2>
+              </div>
+              <div class="card-body">
+                <form id="add-subject-form" class="inline-form">
+                  <div class="form-row">
+                    <div class="input-wrapper">
+                      <label for="sub-name">과목명</label>
+                      <input type="text" id="sub-name" placeholder="예: 수학Ⅰ, 영어 독해" required>
+                    </div>
+                    <div class="input-wrapper">
+                      <label for="sub-units">단위수</label>
+                      <input type="number" id="sub-units" min="1" max="10" placeholder="단위" required>
+                    </div>
+                  </div>
+                  
+                  <div class="form-row">
+                    <div class="input-wrapper">
+                      <label for="sub-rank">석차 (등)</label>
+                      <input type="number" id="sub-rank" min="1" placeholder="등" required>
+                    </div>
+                    <div class="input-wrapper">
+                      <label for="sub-same-rank">동석차 수</label>
+                      <input type="number" id="sub-same-rank" min="1" value="1" placeholder="명">
+                    </div>
+                    <div class="input-wrapper">
+                      <label for="sub-total">이수자 수</label>
+                      <input type="number" id="sub-total" min="1" placeholder="총인원" required>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block">
+                    <i data-lucide="plus"></i>
+                    <span>과목 추가하기</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- 등록된 과목 리스트 -->
+            <div class="glass-card tracker-list-card">
+              <div class="card-header list-header">
+                <div class="header-left">
+                  <i data-lucide="table-properties" class="header-icon teal"></i>
+                  <h2>등록된 과목 리스트</h2>
+                </div>
+                <button id="btn-clear-all" class="btn-text" type="button">
+                  <i data-lucide="trash-2"></i>
+                  <span>전체 초기화</span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="table-container">
+                  <table class="premium-table">
+                    <thead>
+                      <tr>
+                        <th>과목명</th>
+                        <th>단위수</th>
+                        <th>석차 / 이수자</th>
+                        <th>백분위</th>
+                        <th>등급</th>
+                        <th>작업</th>
+                      </tr>
+                    </thead>
+                    <tbody id="subject-list-tbody">
+                      <!-- JavaScript가 테이블 내용 생성 -->
+                    </tbody>
+                  </table>
+                  <div class="empty-state" id="list-empty-state">
+                    <i data-lucide="inbox" class="empty-icon"></i>
+                    <p>등록된 과목이 없습니다. 위의 양식을 작성하여 과목을 추가하세요.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 탭 3: 등급 산출 기준표 -->
+        <div class="tab-pane" id="grade-info">
+          <div class="glass-card">
+            <div class="card-header">
+              <i data-lucide="book-open" class="header-icon yellow"></i>
+              <h2>내신 등급 산출 공식 및 기준</h2>
+            </div>
+            <div class="card-body">
+              
+              <div class="info-section">
+                <h3>1. 고등학교 내신 상대평가 (9등급제 비율)</h3>
+                <p>고등학교 주요 일반계 과목의 내신은 학교생활기록부 작성 및 관리지침에 따라 학생들의 성적 백분위를 기준으로 9개 등급으로 나눕니다.</p>
+                
+                <div class="grade-table-grid">
+                  <div class="table-card tier-1">
+                    <div class="tier-badge">1등급</div>
+                    <div class="tier-range">상위 4% 이내</div>
+                  </div>
+                  <div class="table-card tier-2">
+                    <div class="tier-badge">2등급</div>
+                    <div class="tier-range">상위 4% 초과 ~ 11% 이내</div>
+                  </div>
+                  <div class="table-card tier-3">
+                    <div class="tier-badge">3등급</div>
+                    <div class="tier-range">상위 11% 초과 ~ 23% 이내</div>
+                  </div>
+                  <div class="table-card tier-4">
+                    <div class="tier-badge">4등급</div>
+                    <div class="tier-range">상위 23% 초과 ~ 40% 이내</div>
+                  </div>
+                  <div class="table-card tier-5">
+                    <div class="tier-badge">5등급</div>
+                    <div class="tier-range">상위 40% 초과 ~ 60% 이내</div>
+                  </div>
+                  <div class="table-card tier-6">
+                    <div class="tier-badge">6등급</div>
+                    <div class="tier-range">상위 60% 초과 ~ 77% 이내</div>
+                  </div>
+                  <div class="table-card tier-7">
+                    <div class="tier-badge">7등급</div>
+                    <div class="tier-range">상위 77% 초과 ~ 89% 이내</div>
+                  </div>
+                  <div class="table-card tier-8">
+                    <div class="tier-badge">8등급</div>
+                    <div class="tier-range">상위 89% 초과 ~ 96% 이내</div>
+                  </div>
+                  <div class="table-card tier-9">
+                    <div class="tier-badge">9등급</div>
+                    <div class="tier-range">상위 96% 초과 ~ 100% 이내</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-section">
+                <h3>2. 동석차(공동 1등 등) 발생 시 등급 산정 공식 (중간석차 적용)</h3>
+                <p>중간고사나 기말고사에서 동일한 점수를 받아 동석차가 발생할 경우, 학생에게 지나치게 유리하거나 불리하지 않도록 <strong>'중간석차'</strong>를 산출하여 등급 백분율을 결정합니다.</p>
+                
+                <div class="formula-box">
+                  <div class="formula-title">중간석차 계산 공식</div>
+                  <div class="formula-math">중간석차 = 석차 + &frac12; &times; (동석차 수 - 1)</div>
+                  <div class="formula-math">백분율(%) = (중간석차 &divide; 이수자 수) &times; 100</div>
+                </div>
+                <p class="formula-example">
+                  <strong>예시:</strong> 100명이 수강하는 과목에서 공동 1등이 5명 나온 경우:<br>
+                  중간석차 = 1 + (5 - 1) / 2 = <strong>3등</strong><br>
+                  백분율 = (3 / 100) * 100 = <strong>3%</strong> &rarr; 상위 4% 이내이므로 모두 <strong>1등급</strong>을 받게 됩니다.<br>
+                  만약 공동 1등이 9명 나온다면 중간석차는 5등(5%)이 되어 9명 전원이 <strong>2등급</strong>이 됩니다.
+                </p>
+              </div>
+
+              <div class="info-section">
+                <h3>3. 평균 내신 등급 계산법 (단위수 가중평균)</h3>
+                <p>여러 과목의 내신 성적을 종합하여 하나의 평균 등급을 구할 때는 과목별 <strong>'단위수'</strong>(일주일 동안 해당 수업이 진행되는 시간)를 가중치로 부여하여 평균을 구합니다.</p>
+                <div class="formula-box">
+                  <div class="formula-title">평균 내신 등급 공식</div>
+                  <div class="formula-math">평균 등급 = &Sigma;(과목별 등급 &times; 과목별 단위수) &divide; 총 단위수 합계</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 GradeFlow. Designed with excellence for students.</p>
+      <p class="footer-links">
+        <a href="https://github.com" target="_blank">Repository</a>
+        <span class="divider">|</span>
+        <span>고등학교 상대평가 내신 기준 적용</span>
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
