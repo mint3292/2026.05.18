@@ -1,0 +1,1325 @@
+/* ==========================================================================
+   GradeFlow Premium Design System & Stylesheet
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Theme Variables & Base Setup
+   -------------------------------------------------------------------------- */
+:root {
+  /* Font Families */
+  --font-base: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Common Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-circle: 50%;
+
+  /* Status Colors */
+  --color-success: hsl(142, 72%, 45%);
+  --color-warning: hsl(38, 92%, 50%);
+  --color-danger: hsl(350, 89%, 60%);
+  --color-info: hsl(200, 95%, 48%);
+
+  /* Grade Specific Hues */
+  --g1-color: #ffd700;
+  --g2-color: #a0aec0;
+  --g3-color: #d69e2e;
+  --g4-color: #319795;
+  --g5-color: #3182ce;
+  --g6-color: #553c9a;
+  --g7-color: #805ad5;
+  --g8-color: #718096;
+  --g9-color: #4a5568;
+}
+
+/* Dark Theme Tokens (Default) */
+body.dark-theme {
+  --bg-primary: hsl(224, 71%, 4%);
+  --bg-secondary: hsl(223, 47%, 7%);
+  --bg-card: rgba(13, 20, 38, 0.65);
+  --bg-card-hover: rgba(20, 29, 54, 0.8);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(255, 255, 255, 0.15);
+  --text-main: hsl(210, 40%, 98%);
+  --text-muted: hsl(215, 20%, 65%);
+  --text-inverse: hsl(224, 71%, 4%);
+  
+  --primary-glow: rgba(99, 102, 241, 0.15);
+  --accent-cyan: hsl(180, 100%, 50%);
+  --accent-purple: hsl(280, 100%, 65%);
+  --accent-blue: hsl(210, 100%, 50%);
+  
+  --primary-grad: linear-gradient(135deg, hsl(250, 89%, 65%), hsl(280, 80%, 60%));
+  --accent-grad-cyan: linear-gradient(135deg, hsl(180, 100%, 45%), hsl(210, 100%, 55%));
+  --accent-grad-purple: linear-gradient(135deg, hsl(270, 95%, 60%), hsl(310, 90%, 60%));
+  --accent-grad-teal: linear-gradient(135deg, hsl(150, 80%, 40%), hsl(185, 90%, 45%));
+  --bg-gradient: radial-gradient(circle at 50% 0%, hsl(222, 50%, 10%), hsl(224, 71%, 4%));
+  --card-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+  --glow-opacity: 0.15;
+}
+
+/* Light Theme Tokens */
+body.light-theme {
+  --bg-primary: hsl(210, 40%, 97%);
+  --bg-secondary: hsl(0, 0%, 100%);
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-hover: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color-hover: rgba(0, 0, 0, 0.15);
+  --text-main: hsl(222, 47%, 12%);
+  --text-muted: hsl(215, 16%, 47%);
+  --text-inverse: hsl(0, 0%, 100%);
+  
+  --primary-glow: rgba(99, 102, 241, 0.08);
+  --accent-cyan: hsl(190, 95%, 45%);
+  --accent-purple: hsl(270, 85%, 55%);
+  --accent-blue: hsl(220, 90%, 50%);
+  
+  --primary-grad: linear-gradient(135deg, hsl(250, 85%, 60%), hsl(280, 75%, 55%));
+  --accent-grad-cyan: linear-gradient(135deg, hsl(180, 85%, 40%), hsl(210, 90%, 45%));
+  --accent-grad-purple: linear-gradient(135deg, hsl(270, 85%, 55%), hsl(310, 80%, 55%));
+  --accent-grad-teal: linear-gradient(135deg, hsl(150, 75%, 35%), hsl(185, 80%, 40%));
+  --bg-gradient: radial-gradient(circle at 50% 0%, hsl(210, 40%, 94%), hsl(210, 40%, 97%));
+  --card-shadow: 0 12px 30px 0 rgba(31, 38, 135, 0.06);
+  --glow-opacity: 0.05;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Typography
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  transition: background var(--transition-slow), color var(--transition-normal);
+}
+
+input, select, button {
+  font-family: inherit;
+  font-size: 1rem;
+  color: inherit;
+  border: none;
+  background: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Decorative Background Blobs
+   -------------------------------------------------------------------------- */
+.background-decorations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: var(--radius-circle);
+  filter: blur(140px);
+  opacity: var(--glow-opacity);
+  transition: opacity var(--transition-slow);
+}
+
+.blob-1 {
+  top: -10%;
+  left: 15%;
+  width: 450px;
+  height: 450px;
+  background: var(--primary-grad);
+  animation: float-slow 20s infinite alternate;
+}
+
+.blob-2 {
+  bottom: 10%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  background: var(--accent-grad-cyan);
+  animation: float-slow 25s infinite alternate-reverse;
+}
+
+.blob-3 {
+  top: 40%;
+  left: -10%;
+  width: 350px;
+  height: 350px;
+  background: var(--accent-grad-purple);
+  animation: float-slow 18s infinite alternate 2s;
+}
+
+@keyframes float-slow {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -60px) scale(1.1); }
+  100% { transform: translate(-30px, 30px) scale(0.95); }
+}
+
+/* --------------------------------------------------------------------------
+   4. App Header
+   -------------------------------------------------------------------------- */
+.app-header {
+  background: rgba(var(--bg-secondary), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background var(--transition-normal), border var(--transition-normal);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logo-icon-wrapper {
+  background: var(--primary-grad);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.logo-icon {
+  color: #fff;
+  width: 22px;
+  height: 22px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--text-main), var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sub-brand {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* Icon Buttons */
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.icon-button:hover {
+  border-color: var(--border-color-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.icon-button i {
+  width: 18px;
+  height: 18px;
+}
+
+/* Theme Switch Icons */
+body.dark-theme .sun-icon { display: block; color: var(--color-warning); }
+body.dark-theme .moon-icon { display: none; }
+body.light-theme .sun-icon { display: none; }
+body.light-theme .moon-icon { display: block; color: var(--primary); }
+
+/* --------------------------------------------------------------------------
+   5. Dashboard Banner (GPA Highlight)
+   -------------------------------------------------------------------------- */
+.app-main {
+  flex: 1;
+  padding: 2rem 1.5rem;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dashboard-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem 2.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--primary-grad);
+}
+
+.banner-content h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.7px;
+  background: linear-gradient(to right, var(--text-main), var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.banner-content p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* GPA Circular/Badge Box */
+.banner-gpa-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  padding: 1.2rem 2rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  min-width: 220px;
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body.light-theme .banner-gpa-card {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.gpa-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.gpa-value-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+}
+
+#overall-gpa {
+  font-size: 3rem;
+  font-weight: 900;
+  background: var(--primary-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.gpa-unit {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.gpa-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Tab Navigation
+   -------------------------------------------------------------------------- */
+.tab-nav {
+  display: flex;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  gap: 0.25rem;
+  width: fit-content;
+}
+
+body.light-theme .tab-nav {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.tab-btn {
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+}
+
+.tab-btn i {
+  width: 16px;
+  height: 16px;
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.light-theme .tab-btn:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.tab-btn.active {
+  color: #fff;
+  background: var(--primary-grad);
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+/* Tab panes switcher */
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   7. Glassmorphism Card System
+   -------------------------------------------------------------------------- */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  transition: border var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.glass-card:hover {
+  border-color: var(--border-color-hover);
+}
+
+.card-header {
+  padding: 1.4rem 1.8rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.card-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.header-icon {
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+  border-radius: 6px;
+}
+
+.header-icon.cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+.header-icon.purple { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); }
+.header-icon.blue { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
+.header-icon.teal { background: rgba(20, 184, 166, 0.15); color: hsl(172, 96%, 41%); }
+.header-icon.yellow { background: rgba(234, 179, 8, 0.15); color: var(--color-warning); }
+
+.card-body {
+  padding: 1.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. Form Elements
+   -------------------------------------------------------------------------- */
+.pane-grid-2col {
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr;
+  gap: 1.5rem;
+}
+
+/* Evaluating selector toggle styling */
+.toggle-switch-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.8rem;
+  background: rgba(0, 0, 0, 0.12);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+body.light-theme .toggle-switch-wrapper {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.switch-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.toggle-switch {
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+}
+
+body.light-theme .toggle-switch {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.toggle-switch input[type="radio"] {
+  display: none;
+}
+
+.toggle-switch label {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.toggle-switch input[type="radio"]:checked + label {
+  background: var(--bg-card);
+  color: var(--text-main);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Inputs Groups & Animate display */
+.input-fields-group {
+  display: none;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.input-fields-group.active {
+  display: flex;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-wrapper label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.input-control {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+body.light-theme .input-control {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.input-control:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+body.light-theme .input-control:focus-within {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.input-control input, .input-control select {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 2.8rem;
+  outline: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+}
+
+.input-control select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.input-suffix {
+  padding-right: 1.2rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.input-help-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+  padding-left: 0.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   9. Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.8rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: fit-content;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--primary-grad);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+body.light-theme .btn-secondary {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-color-hover);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+body.light-theme .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.quick-add-to-tracker {
+  margin-top: 1.8rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.quick-add-to-tracker .btn {
+  font-size: 0.85rem;
+  padding: 0.75rem 1.2rem;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-text:hover {
+  color: var(--color-danger);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   10. Quick result pane (Right column styling)
+   -------------------------------------------------------------------------- */
+.result-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  justify-content: center;
+}
+
+.grade-display-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem 1.8rem;
+  border-radius: var(--radius-lg);
+}
+
+body.light-theme .grade-display-section {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+.badge-grade-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glow Circle */
+.grade-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: var(--radius-circle);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 4px solid var(--g5-color);
+  box-shadow: 0 0 25px rgba(49, 130, 206, 0.4);
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.grade-num {
+  font-size: 2.3rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--text-main);
+}
+
+.grade-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.grade-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.percentage-badge {
+  background: var(--accent-grad-cyan);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  width: fit-content;
+  box-shadow: 0 4px 10px rgba(6, 182, 212, 0.25);
+}
+
+.grade-calculation-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.grade-calculation-text strong {
+  color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   11. Bell Curve Visualization (SVG Graph)
+   -------------------------------------------------------------------------- */
+.bell-curve-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.section-title-sm {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.2px;
+}
+
+.svg-container {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.6rem;
+  overflow: hidden;
+}
+
+body.light-theme .svg-container {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+#bell-curve-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Dynamic Graph Classes */
+.curve-line {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  opacity: 0.4;
+}
+
+.curve-fill-zone {
+  fill: url(#bell-grad-active);
+  opacity: 0.25;
+}
+
+.curve-grid-line {
+  stroke: var(--border-color);
+  stroke-dasharray: 4,4;
+  stroke-width: 1;
+}
+
+.marker-line {
+  stroke: var(--primary);
+  stroke-width: 2;
+  stroke-dasharray: 2,2;
+}
+
+.marker-circle {
+  fill: var(--primary);
+  stroke: #fff;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 2px 8px rgba(99, 102, 241, 0.6));
+}
+
+.marker-pulse {
+  fill: var(--primary);
+  opacity: 0.4;
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.graph-label-text {
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--text-muted);
+  text-anchor: middle;
+}
+
+.curve-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 0 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. Multi-Subject Tracker Layout
+   -------------------------------------------------------------------------- */
+.tracker-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.inline-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+}
+
+.form-row .input-wrapper input {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  outline: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+body.light-theme .form-row .input-wrapper input {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.form-row .input-wrapper input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* Tracker Table Styling */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  position: relative;
+}
+
+.premium-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.premium-table th {
+  padding: 1rem 1.2rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.premium-table td {
+  padding: 1.1rem 1.2rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.premium-table tbody tr {
+  transition: all var(--transition-fast);
+}
+
+.premium-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+body.light-theme .premium-table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+/* Grade badges in table */
+.badge-grade {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Grade Color Maps */
+.bg-g1 { background: var(--g1-color); color: #1a202c !important; text-shadow: none; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
+.bg-g2 { background: var(--g2-color); color: #1a202c !important; }
+.bg-g3 { background: var(--g3-color); }
+.bg-g4 { background: var(--g4-color); }
+.bg-g5 { background: var(--g5-color); }
+.bg-g6 { background: var(--g6-color); }
+.bg-g7 { background: var(--g7-color); }
+.bg-g8 { background: var(--g8-color); }
+.bg-g9 { background: var(--g9-color); }
+
+.badge-units {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+body.light-theme .badge-units {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.percentage-text {
+  font-weight: 600;
+  font-family: 'Inter', inherit;
+}
+
+/* Action delete/edit buttons */
+.btn-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.btn-icon:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-danger);
+}
+
+/* Empty State Table */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 44px;
+  height: 44px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  stroke-width: 1.5;
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. Grade Information Tab (Guides)
+   -------------------------------------------------------------------------- */
+.info-section {
+  margin-bottom: 2.5rem;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+}
+
+.info-section h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+  border-left: 3px solid var(--primary);
+  padding-left: 0.6rem;
+}
+
+.info-section p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.grade-table-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+
+.table-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  padding: 0.9rem 1.2rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.light-theme .table-card {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+.tier-badge {
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  color: #fff;
+}
+
+/* Grade table-cards specific borders & badges colors */
+.tier-1 .tier-badge { background: var(--g1-color); color: #1a202c; }
+.tier-2 .tier-badge { background: var(--g2-color); color: #1a202c; }
+.tier-3 .tier-badge { background: var(--g3-color); }
+.tier-4 .tier-badge { background: var(--g4-color); }
+.tier-5 .tier-badge { background: var(--g5-color); }
+.tier-6 .tier-badge { background: var(--g6-color); }
+.tier-7 .tier-badge { background: var(--g7-color); }
+.tier-8 .tier-badge { background: var(--g8-color); }
+.tier-9 .tier-badge { background: var(--g9-color); }
+
+.tier-range {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Formulas Boxes */
+.formula-box {
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+body.light-theme .formula-box {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.formula-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.5px;
+}
+
+.formula-math {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Inter', inherit;
+  color: var(--text-main);
+  margin-top: 0.4rem;
+}
+
+.formula-example {
+  background: rgba(255, 255, 255, 0.01);
+  padding: 1rem 1.2rem;
+  border-left: 2px solid var(--border-color);
+  font-size: 0.8rem !important;
+}
+
+/* --------------------------------------------------------------------------
+   14. Footer
+   -------------------------------------------------------------------------- */
+.app-footer {
+  border-top: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: background var(--transition-normal), border var(--transition-normal);
+}
+
+body.light-theme .app-footer {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+}
+
+.divider {
+  opacity: 0.3;
+}
+
+/* --------------------------------------------------------------------------
+   15. Responsive Styling (Mobile & Tablet)
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .pane-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    padding: 1.2rem 1rem;
+  }
+  
+  .dashboard-banner {
+    flex-direction: column;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .dashboard-banner::before {
+    width: 100%;
+    height: 4px;
+    top: 0;
+    left: 0;
+  }
+
+  .banner-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .banner-gpa-card {
+    width: 100%;
+  }
+
+  .tab-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tab-btn {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.78rem;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .grade-display-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0.8rem 1rem;
+  }
+  .brand-name {
+    font-size: 1.1rem;
+  }
+  .sub-brand {
+    font-size: 0.65rem;
+  }
+}
