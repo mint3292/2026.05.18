@@ -580,8 +580,10 @@ document.addEventListener('DOMContentLoaded', () => {
       subjectListTbody.appendChild(tr);
     });
 
-    // Re-initialize Lucide Icons on newly rendered table buttons
-    lucide.createIcons();
+    // Re-initialize Lucide Icons on newly rendered table buttons safely
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
 
     // Calculate overall GPA
     const overallGpa = weightedGradeSum / totalUnits;
@@ -696,8 +698,9 @@ document.addEventListener('DOMContentLoaded', () => {
   calculateQuickGrade();
   renderSubjectList();
   
-  // 3. Initialize Lucide Icon renderer
-  lucide.createIcons();
+  // 3. Initialize Lucide Icon renderer safely
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 
 });
-
